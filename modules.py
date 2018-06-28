@@ -104,11 +104,9 @@ class PlainBlock(object):
         self.resample = resample
         self.name = name
 
-    def __call__(self, x, reuse = True):
+    def __call__(self, x):
         with tf.variable_scope(self.name) as vs:
-            if reuse:
-                vs.reuse_variables()
-
+            
             if self.resample == 'down':
                 shortcut_layer = MeanpoolConv
                 conv_1 = functools.partial(Conv2D, in_channels = self.in_chs, out_channels = self.in_chs)
@@ -150,10 +148,8 @@ class BottleneckBlock(object):
         self.resample = resample
         self.name = name
 
-    def __call__(self, x, reuse = True):
+    def __call__(self, x):
         with tf.variable_scope(self.name) as vs:
-            if reuse:
-                vs.reuse_variables()
 
             '''resample: None, 'up', 'down' '''
             if self.resample == 'down':
